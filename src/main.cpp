@@ -6,11 +6,11 @@
 #include "bn_sprite_items_bun.h"
 
 #define FLOOR (80 - 8)
-
+#define CEILING (-64 - 8)
 int main() {
     bn::core::init();
 
-    bn::backdrop::set_color(bn::color(15, 0, 0));
+    bn::backdrop::set_color(bn::color(10, 15, 8));
 
     auto dot = bn::sprite_items::bun.create_sprite(0, 0);
 
@@ -31,6 +31,10 @@ int main() {
         if(bn::keypad::a_pressed()) {
             dy -= jump_strength;
         }
+        if(bn::keypad::b_pressed()) {
+            dy -= jump_strength;
+            dy += (gravity * -1);
+        }
 
         dy += gravity;
 
@@ -38,6 +42,10 @@ int main() {
 
         if(dot.y() > FLOOR) {
             dot.set_y(FLOOR);
+            dy = 0;
+        }
+        if(dot.y() <= CEILING) {
+            dot.set_y(CEILING);
             dy = 0;
         }
         bn::core::update();
