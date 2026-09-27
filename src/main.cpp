@@ -14,7 +14,7 @@ int main() {
 
     auto dot = bn::sprite_items::bun.create_sprite(0, 0);
 
-    bn::fixed speed = 1.5;
+    bn::fixed speed = 2;
 
     bn::fixed dy = 0;
     bn::fixed gravity = .03;
@@ -28,9 +28,14 @@ int main() {
         if(bn::keypad::right_held()) {
             dot.set_x(dot.x() + speed);
         }
-        if(bn::keypad::a_pressed()) {
+        if(bn::keypad::a_released()) {
+
+            while(!bn::keypad::a_released()) {
+                jump_strength += 0.5;
+            }
+
             dy -= jump_strength;
-        }
+        } 
         if(bn::keypad::b_pressed()) {
             jump_strength *= -1;
             gravity *= -1;
